@@ -7,7 +7,7 @@ load_dotenv()
 
 # Constants
 GITHUB_TOKEN = os.getenv('GH_CM_API_TOKEN') 
-REPO_NAME = 'python_created_test'  # Name of the repository to create
+REPO_NAME = 'python_gh_examples'  # Name of the repository to create
 ORG_NAME = 'circularmaterials'
 
 def create_github_org_repo(org_name, repo_name):
@@ -19,12 +19,17 @@ def create_github_org_repo(org_name, repo_name):
     # Check if the repository already exists
     if any(repo.name == repo_name for repo in repos):
         print(f"Repository '{repo_name}' already exists in organization '{org_name}'.")
+        # Output the SSH clone URL
+        print(f"SSH clone URL: {repo.ssh_url}")
         return
 
     # Create the repository if it does not exist
     try:
         repo = org.create_repo(repo_name)
         print(f"Repository '{repo_name}' created successfully in organization '{org_name}'.")
+        
+        # Output the SSH clone URL
+        print(f"SSH clone URL: {repo.ssh_url}")        
     except GithubException as e:
         print(f"Failed to create repository in organization: {e.status} {e.data['message']}")
 
